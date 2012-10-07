@@ -69,7 +69,6 @@ public final class DropItEngine implements ApplicationListener, SensorEventListe
 		myWorld.create();
 	}
 
-	@Override
 	public void create() {
 		myView.renderer.initGL(Gdx.app.getGraphics().getGL10());
 		FileHandle fh = Gdx.files.internal("data/bounce.wav");
@@ -82,19 +81,16 @@ public final class DropItEngine implements ApplicationListener, SensorEventListe
 		
 	}
 
-	@Override
 	public void dispose() {
 		Log.d(LOG_TAG, "dispose");
 	}
 
-	@Override
 	public void pause() {
 		isPaused = true;
 		Log.d(LOG_TAG, "pause");
 		unregisterSensorlistners();
 	}
 
-	@Override
 	public void render() {
 		if(inited) {
 			myView.renderer.onDrawFrame(Gdx.app.getGraphics().getGL10(), Gdx.app.getGraphics().getGLU());	
@@ -103,13 +99,11 @@ public final class DropItEngine implements ApplicationListener, SensorEventListe
 		}
 	}
 	
-	@Override
 	public void resize(int width, int height) {
 		myView.renderer.onSurfaceChanged(Gdx.app.getGraphics().getGL10(), width, height);	
 		Log.d(LOG_TAG, "resize");
 	}
 
-	@Override
 	public void resume() {
 		isPaused = false;
 		Log.d(LOG_TAG, "resume");
@@ -122,7 +116,7 @@ public final class DropItEngine implements ApplicationListener, SensorEventListe
 	public void registerSensorlistners() {
 		// Register this class as a listener
 		sensorManager.registerListener(this,
-				sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY),
+				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 				SensorManager.SENSOR_DELAY_GAME);
 		
 
@@ -135,7 +129,7 @@ public final class DropItEngine implements ApplicationListener, SensorEventListe
 	// This method will update the UI on new sensor events
 	public void onSensorChanged(SensorEvent sensorEvent) {
 		synchronized (this) {
-			if (sensorEvent.sensor.getType() == Sensor.TYPE_GRAVITY) {
+			if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 				myWorld.updateGravity(-sensorEvent.values[0],
 						-sensorEvent.values[1]);
 			}
